@@ -90,15 +90,50 @@
 
     /* ── HERO ── */
     .hero {
-      min-height: 100vh;
+      min-height: 92vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 120px 24px 80px;
+      padding: 120px 24px 60px;
       position: relative;
       overflow: hidden;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: 'Nunito', sans-serif;
+      cursor: pointer;
+      animation: fadeUp 0.6s ease 0.8s both;
+    }
+
+    .scroll-arrow {
+      width: 28px;
+      height: 28px;
+      border: 1.5px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: bounce 2s ease infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
     }
 
     .hero-bg {
@@ -559,7 +594,7 @@
       </svg>
       <span class="nav-logo-text">Yard<span>Mind</span></span>
     </a>
-    <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+    <a href="#features" class="nav-cta">See Features</a>
   </nav>
 
   <!-- HERO -->
@@ -589,10 +624,18 @@
       </div>
       <p class="hero-note">No spam. Just a launch notification when we go live.</p>
     </div>
+    <div class="scroll-indicator" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
+      <span>Scroll</span>
+      <div class="scroll-arrow">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
   </section>
 
   <!-- FEATURES -->
-  <section class="features">
+  <section class="features" id="features">
     <div class="features-inner">
       <p class="features-label">Why YardMind</p>
       <h2 class="features-title">Your yard deserves smarter care.</h2>
@@ -681,39 +724,39 @@
 
   <script>
     async function submitForm(formId, successId) {
-    const form = document.getElementById(formId)
-    const btn = form.querySelector('button')
-    const email = form.querySelector('input[type="email"]').value
-    const success = document.getElementById(successId)
-    btn.textContent = 'Saving...'
-    btn.disabled = true
-    try {
-      await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-    } catch (err) {
-      console.error('Waitlist error:', err)
+      const form = document.getElementById(formId)
+      const btn = form.querySelector('button')
+      const email = form.querySelector('input[type="email"]').value
+      const success = document.getElementById(successId)
+      btn.textContent = 'Saving...'
+      btn.disabled = true
+      try {
+        await fetch('/api/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        })
+      } catch (err) {
+        console.error('Waitlist error:', err)
+      }
+      form.style.display = 'none'
+      success.style.display = 'flex'
     }
-    form.style.display = 'none'
-    success.style.display = 'flex'
-  }
 
-  document.getElementById('heroForm').addEventListener('submit', function(e) {
-    e.preventDefault()
-    submitForm('heroForm', 'heroSuccess')
-  })
+    document.getElementById('heroForm').addEventListener('submit', function(e) {
+      e.preventDefault()
+      submitForm('heroForm', 'heroSuccess')
+    })
 
-  document.getElementById('bottomForm').addEventListener('submit', function(e) {
-    e.preventDefault()
-    submitForm('bottomForm', 'bottomSuccess')
-  })
+    document.getElementById('bottomForm').addEventListener('submit', function(e) {
+      e.preventDefault()
+      submitForm('bottomForm', 'bottomSuccess')
+    })
 
-  document.querySelector('.nav-cta').addEventListener('click', function(e) {
-    e.preventDefault()
-    document.querySelector('#waitlist').scrollIntoView({ behavior: 'smooth', block: 'center' })
-  })
+    document.querySelector('.nav-cta').addEventListener('click', function(e) {
+      e.preventDefault()
+      document.querySelector('#features').scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
   </script>
 
 </body>
