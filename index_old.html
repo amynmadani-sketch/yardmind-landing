@@ -680,40 +680,18 @@
   </footer>
 
   <script>
-    async function submitForm(formId, successId) {
-    const form = document.getElementById(formId)
-    const btn = form.querySelector('button')
-    const email = form.querySelector('input[type="email"]').value
-    const success = document.getElementById(successId)
-    btn.textContent = 'Saving...'
-    btn.disabled = true
-    try {
-      await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-    } catch (err) {
-      console.error('Waitlist error:', err)
+    function submitForm(e, successId) {
+      e.preventDefault()
+      const form = e.target
+      const success = document.getElementById(successId)
+      form.style.display = 'none'
+      success.style.display = 'flex'
     }
-    form.style.display = 'none'
-    success.style.display = 'flex'
-  }
 
-  document.getElementById('heroForm').addEventListener('submit', function(e) {
-    e.preventDefault()
-    submitForm('heroForm', 'heroSuccess')
-  })
-
-  document.getElementById('bottomForm').addEventListener('submit', function(e) {
-    e.preventDefault()
-    submitForm('bottomForm', 'bottomSuccess')
-  })
-
-  document.querySelector('.nav-cta').addEventListener('click', function(e) {
-    e.preventDefault()
-    document.querySelector('#waitlist').scrollIntoView({ behavior: 'smooth', block: 'center' })
-  })
+    document.querySelector('.nav-cta').addEventListener('click', function(e) {
+      e.preventDefault()
+      document.querySelector('#waitlist').scrollIntoView({ behavior: 'smooth', block: 'center' })
+    })
   </script>
 
 </body>
