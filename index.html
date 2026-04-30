@@ -568,8 +568,18 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       nav { padding: 14px 20px; }
-      .hero-form, .bottom-form { flex-direction: column; }
-      .hero-btn { width: 100%; }
+      .hero { padding: 100px 20px 80px; }
+	  .hero-form, .bottom-form { flex-direction: column; align-items: center; }
+	  .hero-btn { width: 100%; text-align: center; }
+	  .hero-input { width: 100%; }
+	  .scroll-indicator {
+		position: relative;
+		bottom: auto;
+		left: auto;
+		transform: none;
+		margin-top: 32px;
+		align-items: center;
+	  }
       footer { flex-direction: column; align-items: flex-start; }
       .footer-links { flex-wrap: wrap; gap: 16px; }
     }
